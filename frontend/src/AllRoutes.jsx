@@ -5,7 +5,8 @@ import MainPage from "./components/MainPage/MainPage";
 import Navbar from "./components/Navbar/Navbar";
 import VideoPage from "./components/videoPage/VideoPage";
 import { WatchList } from "./components/Watchlist/WatchList";
-import {Profile} from "./components/Profile/Profile"
+import { Profile } from "./components/Profile/Profile";
+import Login from "./components/Login/Login";
 
 function AllRoutes() {
   return (
@@ -13,12 +14,19 @@ function AllRoutes() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<MainPage></MainPage>}></Route>
-        <Route path="/:category" element={<MainPage ></MainPage>} ></Route>
+        <Route path="/:category" element={<MainPage></MainPage>}></Route>
         {/* <Route path="/:category/:language" element={<MainPage ></MainPage>} ></Route> */}
-        <Route  path={`/:category/:id`}  element={<IndividualPage  ></IndividualPage>} ></Route>
-        <Route path="/:category/:id/video" element={<VideoPage></VideoPage>}></Route>
-        <Route path="/watchlist" element={<WatchList/>}></Route>
-        <Route path="/profile" element={<Profile/>}></Route>
+        <Route
+          path={`/:category/:id`}
+          element={<IndividualPage></IndividualPage>}
+        ></Route>
+        <Route
+          path="/:category/:id/video"
+          element={<VideoPage></VideoPage>}
+        ></Route>
+        <Route path="/watchlist" element={<WatchList />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/login" element={<Login />}></Route>
       </Routes>
       <Footer></Footer>
     </>
