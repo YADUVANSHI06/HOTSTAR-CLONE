@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import VideoPage from "./components/videoPage/VideoPage";
 import { WatchList } from "./components/Watchlist/WatchList";
 import { Profile } from "./components/Profile/Profile";
-import Login from "./components/Login/Login";
+// import Login from "./components/Login/Login";
 
 function AllRoutes() {
   return (
@@ -26,7 +26,7 @@ function AllRoutes() {
         ></Route>
         <Route path="/watchlist" element={<WatchList />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        {/* <Route path="/login" element={<Login />}></Route> */}
       </Routes>
       <Footer></Footer>
     </>
