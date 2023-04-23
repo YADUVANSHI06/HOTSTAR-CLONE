@@ -1,24 +1,88 @@
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "../Search/Search";
 import { useEffect } from "react";
+import { app } from "../../fireabase.config";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import axios from "axios";
 
 function Navbar() {
-  const [auth, setAuth] = useState();
+  const [user, setUser] = useState();
+  const [isPremium, setIsPremium] = useState();
   const navigate = useNavigate();
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+  const { search } = useLocation();
 
   useEffect(() => {
+    setIsPremium(localStorage.getItem("premium") ? true : false);
+  }, []);
+
+  useEffect(() => {
+    if (new URLSearchParams(search).get("success")) {
+      localStorage.setItem("premium", true);
+    }
+  }, []);
+
+  useEffect(() => {
+    setUser(localStorage.getItem("user") ? true : false);
     window.addEventListener("user-change", () => {
-      setAuth(localStorage.getItem("user") ? true : false);
+      setUser(localStorage.getItem("user") ? true : false);
     });
-  });
+  }, []);
 
   const logOutUser = () => {
     localStorage.removeItem("user");
-    setAuth(false);
+    setUser(false);
     navigate("/");
+  };
+
+  const handleLogin = () => {
+    signInWithPopup(
+      auth,
+      provider.setCustomParameters({ prompt: "select_account" })
+    )
+      .then((result) => {
+        // The signed-in user info.
+        console.log(result);
+        const user = result.user;
+        // dispatch(
+        //   addUser({
+        //     _id: user.uid,
+        //     name: user.displayName,
+        //     email: user.email,
+        //     image: user.photoURL,
+        //   })
+        // );
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            _id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            image: user.photoURL,
+          })
+        );
+        window.dispatchEvent(new Event("user-change"));
+        // setTimeout(() => {
+        //   navigate("/");
+        // }, 1500);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        console.log(error);
+      });
+  };
+
+  const buyPremium = async () => {
+    const res = await axios.post("http://localhost:7000/pay", {
+      amount: 100000,
+    });
+
+    window.location.href = res.data;
+    console.log(res);
   };
 
   return (
@@ -117,23 +181,26 @@ function Navbar() {
         </div>
         <div className="nav-right">
           <Search />
-          {auth ? (
-            <div className="dropdown">
-              <div className="link" to="/sports">
-                PROFILE
+          {user ? (
+            <>
+              <div className="dropdown">
+                <div className="link" to="/sports">
+                  PROFILE
+                </div>
+                <ul>
+                  <li>
+                    <Link to="/watchlist">WatchList</Link>
+                  </li>
+                  <li>
+                    <Link to="/profile">My Account</Link>
+                  </li>
+                  <li onClick={logOutUser}>Log Out</li>
+                </ul>
               </div>
-              <ul>
-                <li>
-                  <Link to="/watchlist">WatchList</Link>
-                </li>
-                <li>
-                  <Link to="/profile">My Account</Link>
-                </li>
-                <li onClick={logOutUser}>Log Out</li>
-              </ul>
-            </div>
+              {!isPremium && <div onClick={buyPremium}>Buy Premium</div>}
+            </>
           ) : (
-            <Link to="/login">LOGIN</Link>
+            <div onClick={handleLogin}>LOGIN</div>
           )}
         </div>
       </div>
