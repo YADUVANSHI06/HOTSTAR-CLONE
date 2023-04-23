@@ -23,7 +23,7 @@ app.post("/pay", async (req, res) => {
         price_data: {
           currency: "inr",
           product_data: {
-            name: "Dog",
+            name: "Premium Membership",
           },
           unit_amount: req.body.amount,
         },

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { app } from "../../fireabase.config";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import axios from "axios";
+import logo from '../../images/OTT KING.PNG'
 
 function Navbar() {
   const [user, setUser] = useState();
@@ -93,7 +94,7 @@ function Navbar() {
             <Link to="/">
               <img
                 className="disney-img"
-                src="https://secure-media.hotstarext.com/web-assets/prod/images/brand-logos/disney-hotstar-logo-dark.svg"
+                src={logo}
                 alt=""
               />
             </Link>
@@ -106,9 +107,6 @@ function Navbar() {
             <ul>
               <li>
                 <Link to={"/tv/en/individual"}>Other Shows</Link>
-              </li>
-              <li>
-                <Link to={"/tv/hi/individual"}>Hotstar Specials</Link>
               </li>
               <li>
                 <Link to={"/tv/te/individual"}>Star Plus</Link>

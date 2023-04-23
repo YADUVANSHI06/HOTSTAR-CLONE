@@ -15,7 +15,7 @@ export function Profile (){
                 </div>
                 <div className="bottomdiv">
                     <div>
-                        Disney+ Hotstar Mobile for ₹ 499/year 
+                        OTT King Mobile for ₹ 499/year 
                         Valid till: 27 Mar 2023</div>
                     <div>UPGRADE PLAN</div>
                     <div>View Transactions</div>

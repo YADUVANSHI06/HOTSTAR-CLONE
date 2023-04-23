@@ -28,7 +28,7 @@ function AllRoutes() {
         <Route path="/profile" element={<Profile />}></Route>
         {/* <Route path="/login" element={<Login />}></Route> */}
       </Routes>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 }
